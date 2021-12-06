@@ -1,4 +1,4 @@
-# Intro to REST
+# Intro to REST and MVC
 
 ## Lesson Objectives
 
@@ -7,6 +7,35 @@
 1. Install JSONView to make viewing JSON easier
 1. Create a Show route
 1. Enhance the data in your data array
+
+## Define MVC and explain why it matters
+
+- One of the core tenants of good programming is to compartmentalize your code
+- Already our code is getting a little messy
+  - we have data, app instantiation (listening), and routes all in one file
+- One way to organize the code is to separate it out into three sections:
+  - **M** odels
+    - data (javascript variables)
+  - **V** iews
+    - how the data is displayed to the user (HTML)
+  - **C** ontrollers
+    - the glue that connects the models with the views
+- This allows various developers to divide up a large code base
+  - minimizes likelihood of developers overwriting each others code
+  - allows developers to specialize
+    - one can focus just on getting good with dealing with data
+    - one can focus just on getting good with html
+    - one can focus just on getting good with connecting the two
+- Think of MVC as a restaurant
+  - Models are the cook
+    - prepares food/data
+  - Views are the customer
+    - consumes food/data
+  - Controllers are the waiter
+    - brings food from cook to customer
+    - has no idea how food/data is prepared
+    - has no idea how the food/data is consumed
+
 
 ## URI Patterns
 

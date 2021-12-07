@@ -5,11 +5,11 @@
 
 ## Lesson Objectives
 
+1. Describe MVC and its benefits
 1. Describe REST and list the various routes
-1. Create an Index route
+1. Create Index,Show,Update, and Delete routes
 1. Install JSONView to make viewing JSON easier
-1. Create a Show route
-1. Enhance the data in your data array
+1. Explore using curl
 
 ## Define MVC and explain why it matters
 

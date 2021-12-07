@@ -1,3 +1,6 @@
+[![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
+
+
 # Intro to REST and MVC
 
 ## Lesson Objectives
@@ -153,6 +156,9 @@ const express = require('express')
 // CONFIGURATION
 const app = express()
 const PORT = 3000
+// SET UP ROUTES TO ACCEPT FORMS/JSON
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
 
 // 'DATA'
 const fruits = ['apple', 'banana', 'pear']
@@ -310,43 +316,6 @@ Breaking down the parts of a form
 </html>
 ```
 
-### Polishing
-
-Right now, on successful POST, our data is just rendered as JSON. We should redirect it back to our index page or (bonus figure this out!) to the new show page of our new fruit.
-
-```js
-// create
-app.post('/fruits', (req, res) => {
-  console.log(req.body)
-  if (req.body.readyToEat === 'on') { // if checked, req.body.readyToEat is set to 'on'
-    req.body.readyToEat = true
-  } else { // if not checked, req.body.readyToEat is undefined
-    req.body.readyToEat = false
-  }
-  fruits.push(req.body)
-  res.redirect('/fruits')
-})
-
-```
-
-Put a link in the index page going to the new page
-
-```html
-<nav>
-    <a href="/fruits/new">Create a New Fruit</a>
-</nav>
-```
-
-| # | Action | URL | HTTP Verb | EJS view filename |
-|:---:|:---:|:---:|:---:|:---:|
-| 1 | Index | /fruits/ | GET | index.ejs |
-| 2 | Show | /fruits/:index | GET | show.ejs |
-| 3 | New | | | |
-| 4 | **Create** | **/fruits/** | **POST** | **none** |
-| 5 | Edit | | | |
-| 6 | Update | | | |
-| 7 | Destroy | | | |
-
 Our create route will require the HTTP action POST. We can't make POST requests through our browser's URL.
 
 Rather, we'll start out by using cURL. cURL will let us test our route. Once we have it working, we can build out some EJS. Always try to build as little as possible and test it.
@@ -494,7 +463,7 @@ app.post('/products', (req, res)=>{
 and try again
 
 ```javascript
-curl -X POST -d name="dragon fruit" -d color="pink" -d localhost:3000/fruits
+curl -X POST -d name="dragon fruit" -d color="pink" -d readyToEat="on" localhost:3000/fruits
 ```
 
 We should now get back our updated array.
@@ -526,6 +495,32 @@ curl -L http://bit.ly/10hA8iC | bash
 
 ```
 nc towel.blinkenlights.nl 23
+```
+
+
+### Polishing
+
+Right now, on successful POST, our data is just rendered as JSON. We should redirect it back to our index page or (bonus figure this out!) to the new show page of our new fruit.
+
+```js
+// create
+app.post('/fruits', (req, res) => {
+  console.log(req.body)
+  if (req.body.readyToEat === 'on') { // if checked, req.body.readyToEat is set to 'on'
+    req.body.readyToEat = true
+  } else { // if not checked, req.body.readyToEat is undefined
+    req.body.readyToEat = false
+  }
+  fruits.push(req.body)
+  res.redirect('/fruits')
+})
+
+```
+
+```html
+<nav>
+    <a href="/fruits/new">Create a New Fruit</a>
+</nav>
 ```
 
 
@@ -658,8 +653,9 @@ Inside our `index.ejs` file, add a form with just a delete button.
   <head>
     <meta charset="utf-8">
     <title>Index of Fruits</title>
-    <link rel="stylesheet" href="main.css">
-  </head>
+    <link rel="stylesheet" href="/css/app.css">
+
+</head>
   <body>
     <h1>Index of Fruits</h1>
     <nav>
@@ -777,6 +773,8 @@ Now let's grab our create form  and update it for editing in `views/edit.ejs`
     <head>
         <meta charset="utf-8">
         <title></title>
+        <link rel="stylesheet" href="/css/app.css">
+    
     </head>
     <body>
       <h1>Edit Fruit Page</h1>
@@ -803,7 +801,7 @@ Inside our `index.ejs` file, add a link to our edit route which passes in the in
   <head>
     <meta charset="utf-8">
     <title>Index of Fruits</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/css/app.css">
   </head>
   <body>
     <h1>Index of Fruits</h1>
@@ -835,6 +833,8 @@ When we click "Submit Changes" on our edit page (edit.ejs), the form needs to ma
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="/css/app.css">
+    
         <title>Edit a Fruit</title>
     </head>
     <body>
@@ -861,6 +861,8 @@ We should at least set values in the form for the user to update
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="/css/app.css">
+
         <title>Edit a Fruit</title>
     </head>
     <body>
